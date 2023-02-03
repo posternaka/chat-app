@@ -1,5 +1,5 @@
-import { Router } from 'express';
-import { Conversation } from '../models/Conversation.js';
+const Router = require('express');
+const Conversation = require('../models/Conversation.js');
 
 const router = Router();
 
@@ -15,4 +15,4 @@ router.post('/conversation', async (req, res) => {
     }
 })
 
-export default router;
+module.exports = router;

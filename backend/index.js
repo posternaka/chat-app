@@ -1,14 +1,20 @@
-import express from 'express';
-import cors from 'cors';
-import { db } from './utils/database.js';
+const express = require('express');
+const cors = require('cors');
+const db = require('./utils/database.js');
 
-import createConversation from './routes/createConversation.js';
-import createUser from './routes/createUser.js';
-import getUsers from './routes/getUsers.js';
-import getMessages from './routes/getMessages.js';
+const createConversation = require('./routes/createConversation.js');
+const createUser = require('./routes/createUser.js');
+const getUsers = require('./routes/getUsers.js');
+const getMessages = require('./routes/getMessages.js');
 
 const PORT = process.env.PORT || 5000;
 const app = express();
+const server = require('http').Server(app);
+const io = require('socket.io')(PORT, {
+    cors: {
+        origin: 'http://localhost:3000/'
+    }
+});
 
 app.use(cors());
 app.use(express.json());
@@ -17,10 +23,14 @@ app.use('/api', createUser);
 app.use('/api', getUsers);
 app.use('/api', getMessages);
 
+io.on('connection', (socket) => {
+    console.log('user connected', socket);
+})
+
 const start = async () => {
     try {
         await db.sync();
-        app.listen(PORT, () => {
+        server.listen(PORT, () => {
             console.log('Success server')
         });
     } catch (error) {
