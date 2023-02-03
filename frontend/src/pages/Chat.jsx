@@ -15,6 +15,7 @@ const Chat = ({ users, accessUser }) => {
     const [userToSend, setUserToSend] = useState(accessUser);
     const [valueToUser, setValueToUser] = useState('');
     const [conversations, setConversations] = useState([]);
+    const [flag, setFlag] = useState(false);
 
     const [themeMessage, setThemeMessage] = useState('');
     const [message, setMessage] = useState('');
@@ -24,7 +25,7 @@ const Chat = ({ users, accessUser }) => {
 
     useEffect(() => {
         getMessages();
-    }, [conversations]);
+    }, [flag]);
 
     const getMessages = async () => {
         const conversation = await getConversation();
@@ -32,6 +33,7 @@ const Chat = ({ users, accessUser }) => {
     }
 
     const sendMessage =  () => {
+        setFlag(!flag);
         if (!message) {
             return;
         }

@@ -1,9 +1,12 @@
+import io from 'socket.io-client';
 import { useState } from "react";
 import { Routes, Route } from 'react-router-dom';
 
 import PrivateRoutes from './routes/privateRoute';
 import Chat from "./pages/Chat";
 import Entry from './pages/Entry';
+
+const socket = io('http://localhost:5000');
 
 const App = () => {
   const [accessUser, setAccessUser] = useState();

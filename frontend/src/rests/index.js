@@ -2,7 +2,6 @@ import axios from "axios";
 import { URL } from "../types/url";
 
 export const createConversation = async (body) => {
-    console.log(body);
     try {
         return await axios.post(`${URL}/conversation`, body);
     } catch (error) {
